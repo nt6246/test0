@@ -67,6 +67,7 @@ namespace Cupscale
             AddBinsToPath();
             Implementations.Imps.Init();
             ResourceLimits.Memory = (ulong)Math.Round(ResourceLimits.Memory * 1.5f);
+            OpenCL.IsEnabled = false;
             Cleanup();
             string gpus = OsUtils.GetGpus().Replace("NVIDIA ", "").Replace("AMD ", "").Replace("Intel ", "");
             MainForm ProgramForm = new MainForm();
