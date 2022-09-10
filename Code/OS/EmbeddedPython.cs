@@ -63,6 +63,20 @@ namespace Cupscale.OS
             }
         }
 
+        public static void PublicRunCompact()
+        {
+            extractPath = Path.Combine(Installer.path, "py");
+            if (Directory.Exists(extractPath))
+            {
+                RunCompact();
+                Program.ShowMessage("Compression Complete!", "Compressor");
+            }
+            else
+            {
+                Program.ShowMessage("Python Runtime not found!", "Compressor");
+            }
+        }
+
         static TextBox logBox;
         static HTAlt.WinForms.HTButton runBtn;
         static string downloadPath;

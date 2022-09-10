@@ -223,5 +223,10 @@ namespace Cupscale.Forms
             if (uninstallPyBtn.Visible)
                 uninstallPyBtn.Enabled = File.Exists(EmbeddedPython.GetEmbedPyPath());
         }
+
+        private void CompressButton_Click(object sender, EventArgs e)
+        {
+            EmbeddedPython.PublicRunCompact();
+        }
     }
 }
