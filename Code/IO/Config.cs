@@ -248,6 +248,7 @@ namespace Cupscale
             if (key == "ddsEnableMips") return WriteDefault(key, "True");
             if (key == "flipTga") return WriteDefault(key, "True");
             // ESRGAN Pytorch
+            if (key == "esrganPytorchPythonRuntime") return WriteDefault(key, "1");
             if (key == "esrganPytorchAlphaMode") return WriteDefault(key, "1");
             if (key == "esrganPytorchFp16") return WriteDefault(key, "True");
             if (key == "esrganPytorchGpuId") return WriteDefault(key, "0");
