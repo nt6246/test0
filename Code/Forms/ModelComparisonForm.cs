@@ -7,9 +7,11 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using Cupscale.Data;
 using Cupscale.ImageUtils;
 using Cupscale.IO;
+using Cupscale.IO.NS;
 using Cupscale.Main;
 using Cupscale.OS;
 using Cupscale.UI;
@@ -85,13 +87,6 @@ namespace Cupscale.Forms
 
             string[] lines = Regex.Split(modelPathsBox.Text, "\r\n|\r|\n");
 
-            if(comparisonMode.SelectedIndex == 0)
-            {
-                string outpath = Path.Combine(Paths.imgOutPath, "!Original.png");
-                await ImageProcessing.ConvertImage(currentSourcePath, GetSaveFormat(), false, ImageProcessing.ExtMode.UseNew, false, outpath);
-                await ProcessImage(outpath, "Original");
-            }
-
             for (int i = 0; i < lines.Length; i++)
             {
                 if (!IoUtils.IsPathValid(lines[i]))
@@ -104,8 +99,23 @@ namespace Cupscale.Forms
                 await DoUpscale(i, mdl, !cutoutMode);
             }
 
+            string[] paths_unsorted = Directory.GetFiles(Paths.imgOutPath, "*.png", SearchOption.AllDirectories);
+            
+            NumericComparer ns = new NumericComparer();
+            Array.Sort(paths_unsorted, ns);
+            List<string> paths_list = new List<string>(paths_unsorted);
+
+            if (comparisonMode.SelectedIndex == 0)
+            {
+                string outpath = Path.Combine(Paths.imgOutPath, "!Original.png");
+                await ImageProcessing.ConvertImage(currentSourcePath, GetSaveFormat(), false, ImageProcessing.ExtMode.UseNew, false, outpath);
+                await ProcessImage(outpath, "Original");
+                paths_list.Insert(0, outpath);
+            }
+
             bool vert = compositionMode.SelectedIndex == 1;
-            MagickImage merged = ImgUtils.MergeImages(Directory.GetFiles(Paths.imgOutPath, "*.png", SearchOption.AllDirectories), vert, true);
+
+            MagickImage merged = ImgUtils.MergeImages(paths_list.ToArray(), vert, true);
             string mergedPath = Path.Combine(Paths.imgOutPath, Path.GetFileNameWithoutExtension(Program.lastImgPath) + "-composition");
             mergedPath = Path.ChangeExtension(mergedPath, GetSaveExt());
             merged.Write(mergedPath);
