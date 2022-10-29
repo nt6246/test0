@@ -34,8 +34,6 @@ namespace Cupscale.Forms
             if (openPyInstaller)
                 tabList1.SelectedIndex = 1;
 
-            if (openPyInstaller && startPyInstall)
-                installBtn_Click(null, null);
         }
 
         private async void DependencyCheckerForm_Load(object sender, EventArgs e)
@@ -218,17 +216,6 @@ namespace Cupscale.Forms
 
             await Task.Delay(100);
             await Refresh();
-        }
-
-        private async void installBtn_Click(object sender, EventArgs e)
-        {
-            await EmbeddedPython.Download(installerLogBox, installBtn);
-        }
-
-        private void DependencyCheckerForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if(!installBtn.Enabled)
-                e.Cancel = true;
         }
     }
 }

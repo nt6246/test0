@@ -147,9 +147,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.CompressButton = new HTAlt.WinForms.HTButton();
             this.label18 = new System.Windows.Forms.Label();
-            this.uninstallPyBtn = new HTAlt.WinForms.HTButton();
             this.installPyBtn = new HTAlt.WinForms.HTButton();
-            this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
             this.debugPage = new Cyotek.Windows.Forms.TabListPage();
@@ -1548,9 +1546,7 @@
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel5.Controls.Add(this.CompressButton);
             this.panel5.Controls.Add(this.label18);
-            this.panel5.Controls.Add(this.uninstallPyBtn);
             this.panel5.Controls.Add(this.installPyBtn);
-            this.panel5.Controls.Add(this.label32);
             this.panel5.Controls.Add(this.label33);
             this.panel5.Controls.Add(this.label34);
             this.panel5.ForeColor = System.Drawing.Color.White;
@@ -1567,7 +1563,7 @@
             this.CompressButton.FlatAppearance.BorderSize = 0;
             this.CompressButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CompressButton.ForeColor = System.Drawing.Color.White;
-            this.CompressButton.Location = new System.Drawing.Point(245, 151);
+            this.CompressButton.Location = new System.Drawing.Point(245, 113);
             this.CompressButton.Margin = new System.Windows.Forms.Padding(8);
             this.CompressButton.Name = "CompressButton";
             this.CompressButton.Size = new System.Drawing.Size(200, 22);
@@ -1579,29 +1575,11 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 151);
+            this.label18.Location = new System.Drawing.Point(6, 113);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(236, 16);
             this.label18.TabIndex = 16;
             this.label18.Text = "Compress Embedded Python Runtime";
-            // 
-            // uninstallPyBtn
-            // 
-            this.uninstallPyBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uninstallPyBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.uninstallPyBtn.FlatAppearance.BorderSize = 0;
-            this.uninstallPyBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.uninstallPyBtn.ForeColor = System.Drawing.Color.White;
-            this.uninstallPyBtn.Location = new System.Drawing.Point(245, 113);
-            this.uninstallPyBtn.Margin = new System.Windows.Forms.Padding(8);
-            this.uninstallPyBtn.Name = "uninstallPyBtn";
-            this.uninstallPyBtn.Size = new System.Drawing.Size(200, 22);
-            this.uninstallPyBtn.TabIndex = 15;
-            this.uninstallPyBtn.Text = "Uninstall";
-            this.uninstallPyBtn.UseVisualStyleBackColor = false;
-            this.uninstallPyBtn.VisibleChanged += new System.EventHandler(this.uninstallPyBtn_VisibleChanged);
-            this.uninstallPyBtn.Click += new System.EventHandler(this.uninstallPyBtn_Click);
             // 
             // installPyBtn
             // 
@@ -1620,23 +1598,14 @@
             this.installPyBtn.UseVisualStyleBackColor = false;
             this.installPyBtn.Click += new System.EventHandler(this.installPyBtn_Click);
             // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(6, 118);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(225, 16);
-            this.label32.TabIndex = 4;
-            this.label32.Text = "Uninstall Embedded Python Runtime";
-            // 
             // label33
             // 
             this.label33.AutoSize = true;
             this.label33.Location = new System.Drawing.Point(6, 80);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(208, 16);
+            this.label33.Size = new System.Drawing.Size(174, 16);
             this.label33.TabIndex = 2;
-            this.label33.Text = "Install Embedded Python Runtime";
+            this.label33.Text = "Open Dependency Checker";
             // 
             // label34
             // 
@@ -1915,9 +1884,7 @@
         private System.Windows.Forms.ComboBox cmdDebugMode;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.Panel panel5;
-        private HTAlt.WinForms.HTButton uninstallPyBtn;
         private HTAlt.WinForms.HTButton installPyBtn;
-        private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.CheckBox useMozJpeg;

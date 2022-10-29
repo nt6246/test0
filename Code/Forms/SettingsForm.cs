@@ -195,7 +195,6 @@ namespace Cupscale.Forms
         private void installPyBtn_Click(object sender, EventArgs e)
         {
             new DependencyCheckerForm().ShowDialog();
-            uninstallPyBtn_VisibleChanged(null, null);
         }
 
         private async void uninstallPyBtn_Click(object sender, EventArgs e)
@@ -206,7 +205,6 @@ namespace Cupscale.Forms
                 await Task.Delay(50);
                 Directory.Delete(EmbeddedPython.GetEmbedPyPath().GetParentDir(), true);
                 dialogForm.Close();
-                uninstallPyBtn.Enabled = false;
 
                 Config.Set("esrganPytorchPythonRuntime", "0");
                 ConfigParser.LoadComboxIndex(esrganPytorchPythonRuntime);
@@ -216,12 +214,6 @@ namespace Cupscale.Forms
                 Program.CloseTempForms();
                 Logger.ErrorMessage("Can't uninstall embedded Python runtime: ", ex);
             }
-        }
-
-        private void uninstallPyBtn_VisibleChanged(object sender, EventArgs e)
-        {
-            if (uninstallPyBtn.Visible)
-                uninstallPyBtn.Enabled = File.Exists(EmbeddedPython.GetEmbedPyPath());
         }
 
         private void CompressButton_Click(object sender, EventArgs e)
