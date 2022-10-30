@@ -45,15 +45,11 @@ namespace Cupscale.OS
                 {
                     Logger.Log("Running model converter...");
                     DialogForm dialog = new DialogForm("Converting ESRGAN model to NCNN format...");
-                    await RunConverter(modelPath);
+                    await RunConverter(modelPath, outPath);
 
                     if (lastNcnnOutput.Contains("Error:"))
                         throw new Exception(lastNcnnOutput.SplitIntoLines().Where(x => x.Contains("Error:")).First());
 
-					string moveFrom = Path.Combine(ConverterDir, Path.ChangeExtension(modelName, null));
-                    Logger.Log("Moving " + moveFrom + " to " + outPath);
-                    await IoUtils.CopyDir(moveFrom, outPath, "*", true);
-                    Directory.Delete(moveFrom, true);
                     dialog.Close();
                 }
                 else
@@ -76,18 +72,19 @@ namespace Cupscale.OS
 				IoUtils.RenameFile(file.FullName, pattern.Replace("*", $"{file.Name.GetInt()}"));
 		}
 
-		static async Task RunConverter(string modelPath)
+		static async Task RunConverter(string modelPath, string directory)
         {
             lastNcnnOutput = "";
 			bool showWindow = Config.GetInt("cmdDebugMode") > 0;
 			bool stayOpen = Config.GetInt("cmdDebugMode") == 2;
 
 			modelPath = modelPath.Wrap();
+			directory = directory.Wrap();
 
 			string opt = "/C";
 			if (stayOpen) opt = "/K";
 
-			string args = $"{opt} cd /D {ConverterDir.Wrap()} & pth2ncnn.exe {modelPath}";
+			string args = $"{opt} cd /D {ConverterDir.Wrap()} & {EmbeddedPython.GetPyCmd()} pth2ncnn.py {modelPath} --outpath {directory}";
 
 			Logger.Log("[CMD] " + args);
 			Process converterProc = OsUtils.NewProcess(!showWindow);
@@ -95,8 +92,8 @@ namespace Cupscale.OS
 
 			if (!showWindow)
 			{
-				converterProc.OutputDataReceived += OutputHandler;
-				converterProc.ErrorDataReceived += OutputHandler;
+				converterProc.OutputDataReceived += ConverterOutputHandler;
+				converterProc.ErrorDataReceived += ConverterOutputHandler;
 			}
 
 			currentProcess = converterProc;
@@ -112,7 +109,7 @@ namespace Cupscale.OS
 				await Task.Delay(100);
 		}
 
-		private static void OutputHandler(object sendingProcess, DataReceivedEventArgs output)
+		private static void ConverterOutputHandler(object sendingProcess, DataReceivedEventArgs output)
 		{
 			if (output == null || output.Data == null)
 				return;
