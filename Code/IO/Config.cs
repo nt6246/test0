@@ -250,7 +250,17 @@ namespace Cupscale
             // ESRGAN Pytorch
             if (key == "esrganPytorchPythonRuntime") return WriteDefault(key, "1");
             if (key == "esrganPytorchAlphaMode") return WriteDefault(key, "1");
-            if (key == "esrganPytorchFp16") return WriteDefault(key, "True");
+            if (key == "esrganPytorchFp16")
+            {
+                if (OS.NvApi.GetFirstGpuName().Contains("RTX"))
+                {
+                    return WriteDefault(key, "True");
+                }
+                else
+                {
+                    return WriteDefault(key, "False");
+                }
+            }
             if (key == "esrganPytorchGpuId") return WriteDefault(key, "0");
             // ESRGAN NCNN
             if (key == "esrganNcnnGpu") return WriteDefault(key, "0");
