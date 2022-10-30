@@ -141,7 +141,7 @@ namespace Cupscale
                 int q = Config.GetInt("jpegQ");
                 if (Config.GetBool("useMozJpeg"))
                 {
-                    MozJpeg.Encode(path, GetOutPath(path, newExt, extMode, overrideOutPath), q);
+                    MozJpeg.Encode(img, GetOutPath(path, newExt, extMode, overrideOutPath), q);
                     magick = false;
                 }
                 else
@@ -279,7 +279,8 @@ namespace Cupscale
 
                 if (Config.GetBool("useMozJpeg"))
                 {
-                    MozJpeg.Encode(path, GetOutPath(path, newExt, ExtMode.UseNew, ""), q);
+                    
+                    MozJpeg.Encode(img, GetOutPath(path, newExt, ExtMode.UseNew, ""), q);
                     magick = false;
                 }
                 else
