@@ -34,6 +34,7 @@ namespace Cupscale.Main
 			BatchUpscaleUI.Init(batchOutDir, batchFileList, batchDirLabel);
 			VideoUpscaleUI.Init(videoOutDir, videoLogBox, videoPathLabel, videoOutputFormat);
 			Program.mainForm = this;
+			OS.OsUtils.DarkWindow(this.Handle);
 
 			if(Config.GetBool("startMaximized"))
 				WindowState = FormWindowState.Maximized;

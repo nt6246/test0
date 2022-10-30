@@ -4,6 +4,7 @@ using System.Security.Principal;
 using System;
 using System.Diagnostics;
 using System.Management;
+using System.Runtime.InteropServices;
 
 namespace Cupscale.OS
 {
@@ -38,7 +39,7 @@ namespace Cupscale.OS
         }
 
         //public enum ProcessMode { Visible }
-        public static Process SetStartInfo (Process proc, bool hidden, string filename = "cmd.exe")
+        public static Process SetStartInfo(Process proc, bool hidden, string filename = "cmd.exe")
         {
             proc.StartInfo.UseShellExecute = !hidden;
             proc.StartInfo.RedirectStandardOutput = hidden;
@@ -64,7 +65,7 @@ namespace Cupscale.OS
         {
             try
             {
-                ManagementObjectSearcher processSearcher = new ManagementObjectSearcher ("Select * From Win32_Process Where ParentProcessID=" + pid);
+                ManagementObjectSearcher processSearcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid);
                 ManagementObjectCollection processCollection = processSearcher.Get();
 
                 Process proc = Process.GetProcessById(pid);
@@ -110,6 +111,23 @@ namespace Cupscale.OS
             }
 
             return string.Join(", ", gpus);
+        }
+
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref int pvAttribute, int cbAttribute);
+
+        private const int DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19;
+        private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+
+        public static void DarkWindow(IntPtr HWND)
+        {
+            int num;
+            num = DWMWA_USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
+            DwmSetWindowAttribute(HWND, num, ref num, sizeof(int));
+            num = DWMWA_USE_IMMERSIVE_DARK_MODE;
+            DwmSetWindowAttribute(HWND, num, ref num, sizeof(int));
+
         }
     }
 }
