@@ -59,7 +59,7 @@ namespace Cupscale.OS
             if (Directory.Exists(Path.Combine(shippedPath, "py")))
             {
                 IoUtils.TryDeleteIfExists(Path.Combine(shippedPath, "py", "utils"));
-                await IoUtils.CopyDir(Path.Combine(shippedPath, Implementations.Imps.esrganPytorch.dir, "utils"), Path.Combine(shippedPath, "py", "utils"));
+                await IoUtils.CopyDir(Path.Combine(shippedPath, "utils"), Path.Combine(shippedPath, "py", "utils"));
             }
         }
 
