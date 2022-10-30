@@ -18,6 +18,7 @@ namespace Cupscale.OS
     {
 		public static string currentNcnnModel;
         public static string lastNcnnOutput;
+		public static string lastScaleCheckOutput;
 		static Process currentProcess;
 		static string ncnnDir = "";
 		private static string ConverterDir { get => Path.Combine(Paths.binPath, "pth2ncnn"); }
@@ -145,12 +146,54 @@ namespace Cupscale.OS
             }
 		}
 
-		public static int GetNcnnModelScale(string modelDir)
+		static async Task RunScaleCheck(string bin, string param)
+		{
+			lastScaleCheckOutput = "";
+
+			bin = bin.Wrap();
+			param = param.Wrap();
+
+			string opt = "/C";
+
+			string args = $"{opt} cd /D {ConverterDir.Wrap()} & {EmbeddedPython.GetPyCmd()} get_scale.py {bin} {param}";
+
+			Logger.Log("[CMD] " + args);
+			Process converterProc = OsUtils.NewProcess(true);
+			converterProc.StartInfo.Arguments = args;
+
+
+			converterProc.OutputDataReceived += ScaleCheckOutputHandler;
+			converterProc.ErrorDataReceived += ScaleCheckOutputHandler;
+
+			currentProcess = converterProc;
+			converterProc.Start();
+
+
+			converterProc.BeginOutputReadLine();
+			converterProc.BeginErrorReadLine();
+
+			while (!converterProc.HasExited)
+				await Task.Delay(100);
+		}
+
+		private static void ScaleCheckOutputHandler(object sendingProcess, DataReceivedEventArgs output)
+		{
+			if (output == null || output.Data == null)
+				return;
+
+			string data = output.Data;
+			Logger.Log("[NcnnUtils] Scale Check Output: " + data);
+			lastScaleCheckOutput += $"{data}\n";
+		}
+
+		public static async Task<int> GetNcnnModelScale(string modelDir)
 		{
             try
             {
-				string[] files = Directory.GetFiles(modelDir, "*.bin");
-				return Path.GetFileNameWithoutExtension(files[0]).GetInt();
+				string bin_file = Directory.GetFiles(modelDir, "*.bin")[0];
+				string param_file = Directory.GetFiles(modelDir, "*.param")[0];
+				await RunScaleCheck(bin_file, param_file);
+				return lastScaleCheckOutput.GetInt();
 			}
 			catch (Exception e)
             {

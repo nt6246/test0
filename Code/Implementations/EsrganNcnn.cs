@@ -34,7 +34,7 @@ namespace Cupscale.Implementations
             await NcnnUtils.ConvertNcnnModel(modelPath, "x*");
             Logger.Log("[ESRGAN] NCNN Model is ready: " + NcnnUtils.currentNcnnModel);
             Program.mainForm.SetProgress(3f, "Loading ESRGAN (NCNN)...");
-            int scale = NcnnUtils.GetNcnnModelScale(NcnnUtils.currentNcnnModel);
+            int scale = await NcnnUtils.GetNcnnModelScale(NcnnUtils.currentNcnnModel);
             string opt = stayOpen ? "/K" : "/C";
             string tta = Config.GetBool("esrganNcnnTta") ? "-x" : "";
             string ts = Config.GetInt("esrganNcnnTilesize") >= 32 ? $"-t {Config.GetInt("esrganNcnnTilesize")}" : "";

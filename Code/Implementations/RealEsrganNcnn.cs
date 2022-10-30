@@ -34,7 +34,7 @@ namespace Cupscale.Implementations
             await NcnnUtils.ConvertNcnnModel(modelPath, "esrgan-x*");
             Logger.Log("[ESRGAN] NCNN Model is ready: " + NcnnUtils.currentNcnnModel);
             Program.mainForm.SetProgress(3f, "Loading RealESRGAN (NCNN)...");
-            int scale = NcnnUtils.GetNcnnModelScale(NcnnUtils.currentNcnnModel);
+            int scale = await NcnnUtils.GetNcnnModelScale(NcnnUtils.currentNcnnModel);
 
             if(scale != 4)
             {
