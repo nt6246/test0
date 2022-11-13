@@ -9,9 +9,11 @@ Based around [xinntao's ESRGAN](https://github.com/xinntao/ESRGAN) implemented v
 
 AMD/Intel GPU compatibility is possible thanks to BlueAmulet's [esrgan-ncnn-vulkan](https://github.com/BlueAmulet/realsr-ncnn-vulkan) based on nihui's [realsr-ncnn-vulkan](https://github.com/nihui/realsr-ncnn-vulkan) running on Tencent's [ncnn](https://github.com/Tencent/ncnn) framework, as well as [xinntao's Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN).
 
+PTH2NCNN and other features are possible thanks to [ChaiNNer](https://github.com/chaiNNer-org/ChaiNNer). 
+
 ## Download:
 
-[Get the latest release](https://github.com/n00mkrad/cupscale/releases)
+[Get the latest release](https://github.com/DrPleaseRespect/cupscale/releases)
 
 ## Installation:
 
