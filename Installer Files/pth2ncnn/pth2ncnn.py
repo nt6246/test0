@@ -192,7 +192,7 @@ if "__main__" == __name__:
         print('Error: Model [{:s}] does not exist.'.format(args.model))
         sys.exit(1)
 
-    pth2ncnn_compatibility(args.model, args.full, args.outpath)
+    pth2ncnn_compatibility(args.model, not args.full, args.outpath)
 
 
 
