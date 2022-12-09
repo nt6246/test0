@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using Paths = Cupscale.IO.Paths;
 using Cupscale.OS;
 using Cupscale.Data;
+using System.Globalization;
 
 namespace Cupscale.Implementations
 {
@@ -138,7 +139,7 @@ namespace Cupscale.Implementations
             Process proc = OsUtils.NewProcess(!showWindow);
 
             string opt = stayOpen ? "/K" : "/C";
-            string alphaStr = (mdl.interp / 100f).ToString("0.00").Replace(",", ".");
+            string alphaStr = (mdl.interp / 100f).ToString("0.00", CultureInfo.InvariantCulture);
             string outPath = mdl.model1Path.GetParentDir();
             string filename = $"{mdl.model1Name}-{mdl.model2Name}-interp{alphaStr}.pth";
             outPath = Path.Combine(outPath, filename);

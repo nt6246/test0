@@ -12,6 +12,7 @@ using Paths = Cupscale.IO.Paths;
 using Cupscale.Implementations;
 using Cupscale.OS;
 using Cupscale.Data;
+using System.Globalization;
 
 namespace Cupscale.Implementations
 {
@@ -90,7 +91,7 @@ namespace Cupscale.Implementations
 
             if (showTileProgress && line.Trim().EndsWith("%"))
             {
-                float percent = float.Parse(line.Replace("%", "").Replace(",", "."));
+                float percent = float.Parse(line.Replace("%", ""));
                 Program.mainForm.SetProgress(percent, $"Upscaling Tiles ({percent}%)");
             }
 
