@@ -41,12 +41,20 @@ namespace Cupscale.Implementations
                 Program.ShowMessage($"Error: This implementation currently only supports 4x scale models.", "Error");
                 return;
             }
-
+            string gpu_ids;
+            if (Config.Get("realEsrganNcnnGpus").ToLower() == "auto")
+            {
+                gpu_ids = "auto";
+            }
+            else
+            {
+                gpu_ids = Config.GetInt("realEsrganNcnnGpus").ToString();
+            }
             string opt = stayOpen ? "/K" : "/C";
             string tta = Config.GetBool("realEsrganNcnnTta") ? "-x" : "";
             string ts = Config.GetInt("realEsrganNcnnTilesize") >= 32 ? $"-t {Config.GetInt("realEsrganNcnnTilesize")}" : "";
             string cmd = $"{opt} cd /D {Path.Combine(Paths.binPath, Imps.realEsrganNcnn.dir).Wrap()} & {exeName} -i {inpath.Wrap()} -o {outpath.Wrap()}" +
-                $" -g {Config.GetInt("realEsrganNcnnGpus")} -m {NcnnUtils.currentNcnnModel.Wrap()} -n esrgan-x4 -s {scale} {tta} {ts}";
+                $" -g {gpu_ids} -m {NcnnUtils.currentNcnnModel.Wrap()} -n esrgan-x4 -s {scale} {tta} {ts}";
             Logger.Log("[CMD] " + cmd);
 
             Process proc = OsUtils.NewProcess(!showWindow);
