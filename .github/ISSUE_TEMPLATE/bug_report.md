@@ -32,6 +32,8 @@ Session Log from CupscaleData/sessionlog.txt
 **Desktop (please complete the following information):**
  - OS Version: [e.g. Windows 10]
  - GPU [e.g. GTX 1650, RTX 2060]
+ - Implementation Used: [e.g ESRGAN PyTorch, ESRGAN NCNN, RealESRGAN NCNN]
+ - Model Used: [e.g 4x-UltraSharp]
 
 **Additional context**
 Add any other context about the problem here.
