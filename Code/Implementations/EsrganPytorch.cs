@@ -113,7 +113,7 @@ namespace Cupscale.Implementations
 
                 Program.lastModelName = mdl.model1Name + ":" + interpLeft + ":" + mdl.model2Name + ":" + interpRight;
 
-                return (mdl1 + ";" + interpLeft + "&" + mdl2 + ";" + interpRight).Wrap(true);
+                return (mdl1 + "@" + interpLeft + "|" + mdl2 + "@" + interpRight).Wrap(true);
             }
 
             if (mdlMode == ModelData.ModelMode.Chain)
